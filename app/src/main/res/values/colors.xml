@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#151c25</color>
+    <color name="colorPrimaryDark">#151c25</color>
+    <color name="colorAccent">#f1b014</color>
+    <color name="descColor">#5F99B3</color>
+    <color name="castBg">#1B2430</color>
+    <color name="player_bg">#07080A</color>
+</resources>
