@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         intent.putExtra("title",movie.getName());
         intent.putExtra("imgUrl",movie.getThumbnail());
         intent.putExtra("cover",movie.getTitleBanerUrl());
+        //sending url to movie detail activity
         intent.putExtra("url",movie.getVideoUrl());
 
         // animation setup

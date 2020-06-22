@@ -14,7 +14,7 @@ public class DataSource {
         //creating a list of movies and add an arrayList of names and covers to it.
         List<Movie> lstMovies=new ArrayList<>();
         //adding title, movies image
-        lstMovies.add(new Movie("bad boys", R.drawable.slide1,R.drawable.johnwichcover));
+        lstMovies.add(new Movie("Sierra Burgess Is a Loser", R.drawable.slide1));
         lstMovies.add(new Movie("john wick", R.drawable.slide2));
         lstMovies.add(new Movie("bad boys -for life", R.drawable.slide1));
         lstMovies.add(new Movie("bad boys", R.drawable.slide1));

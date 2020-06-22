@@ -33,7 +33,8 @@ public class VideoPlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_player);
 
-        inExoPlayer();
+        video_url=getIntent().getExtras().getString("videoUrl");
+        inExoPlayer(video_url);
     }
 
     private void hideActionBar() {
@@ -45,13 +46,12 @@ public class VideoPlayerActivity extends AppCompatActivity {
     }
 
 
-    void inExoPlayer() {
+    void inExoPlayer(String url) {
         playerView = findViewById(R.id.movie_player);//player view in activity
-        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this);//defiining exo player object
+        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this);//defining exo player object
         playerView.setPlayer(simpleExoPlayer);//set exo for player view
-        video_url=getIntent().getExtras().getString("url");//get url from main
         DataSource.Factory dataFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "Film Hub"));
-        MediaSource videoSource = new ExtractorMediaSource.Factory(dataFactory).createMediaSource(Uri.parse(video_url));
+        MediaSource videoSource = new ExtractorMediaSource.Factory(dataFactory).createMediaSource(Uri.parse(url));
         simpleExoPlayer.prepare(videoSource);
         simpleExoPlayer.setPlayWhenReady(true);
     }
