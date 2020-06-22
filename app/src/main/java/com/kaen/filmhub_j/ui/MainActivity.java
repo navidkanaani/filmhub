@@ -6,10 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActivityOptions;
-import android.app.SearchableInfo;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -93,10 +91,10 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         //when we tap on movies images its send us to MovieDetailActivity
         Intent intent=new Intent(this,MovieDetailActivity.class);
         //send title, thumbnail, cover for detail activity
-        intent.putExtra("title",movie.getTitle());
+        intent.putExtra("title",movie.getName());
         intent.putExtra("imgUrl",movie.getThumbnail());
-        intent.putExtra("cover",movie.getCover());
-        intent.putExtra("url",movie.getStreamLink());
+        intent.putExtra("cover",movie.getTitleBanerUrl());
+        intent.putExtra("url",movie.getVideoUrl());
 
         // animation setup
         ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,movieImageView,"animation");
