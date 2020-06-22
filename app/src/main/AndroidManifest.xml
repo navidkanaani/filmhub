@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.VideoPlayerActivity"></activity>
+        <activity android:name=".ui.VideoPlayerActivity">
+        </activity>
     </application>
 
 </manifest>

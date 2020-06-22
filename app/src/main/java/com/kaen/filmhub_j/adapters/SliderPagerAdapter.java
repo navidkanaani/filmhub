@@ -38,7 +38,7 @@ public class SliderPagerAdapter extends PagerAdapter {
         TextView slideText= slideLayout.findViewById(R.id.slide_title);
         slideImg.setImageResource(mList.get(position).getImage());
         slideText.setText(mList.get(position).getTitle());
-
+        //add slider to view group
         container.addView(slideLayout);
         return slideLayout;
 

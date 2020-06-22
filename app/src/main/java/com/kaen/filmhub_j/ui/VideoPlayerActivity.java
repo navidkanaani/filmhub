@@ -46,10 +46,10 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
 
     void inExoPlayer() {
-        playerView = findViewById(R.id.movie_player);
-        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this);
-        playerView.setPlayer(simpleExoPlayer);
-        video_url=getIntent().getExtras().getString("url");
+        playerView = findViewById(R.id.movie_player);//player view in activity
+        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this);//defiining exo player object
+        playerView.setPlayer(simpleExoPlayer);//set exo for player view
+        video_url=getIntent().getExtras().getString("url");//get url from main
         DataSource.Factory dataFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "Film Hub"));
         MediaSource videoSource = new ExtractorMediaSource.Factory(dataFactory).createMediaSource(Uri.parse(video_url));
         simpleExoPlayer.prepare(videoSource);
