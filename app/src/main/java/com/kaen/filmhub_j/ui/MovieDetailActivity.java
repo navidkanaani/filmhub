@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,17 +21,22 @@ import com.kaen.filmhub_j.R;
 import com.kaen.filmhub_j.adapters.CastAdapter;
 import com.kaen.filmhub_j.models.Cast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
     private ImageView movieThumbnailImg, movieCoverImg;
-    private TextView tv_title, tv_description;
+    private TextView tv_title, tv_description,pYear;
     private FloatingActionButton playBtn;
     private RecyclerView castRv;
     private CastAdapter castAdapter;
-    private String mUrl;
+    private String mUrl,year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,23 +53,33 @@ public class MovieDetailActivity extends AppCompatActivity {
         // getting data
         castRv = findViewById(R.id.castRv); //cast recycler
         playBtn = findViewById(R.id.playBtn); //play button
-        String movieTitle = getIntent().getExtras().getString("title"); //getting movie title
-        int imgResourceId = getIntent().getExtras().getInt("imgUrl"); //getting movie's poster
-        int mCover = getIntent().getExtras().getInt("cover"); //getting movie's cover
-//        mUrl=getIntent().getExtras().getString("url");// getting movie's url
+        pYear=findViewById(R.id.yearTextView);//year textview
+        //getting movie title
+        String movieTitle = getIntent().getExtras().getString("title");
+        String movieDesc=getIntent().getExtras().getString("description");
+        //getting movie's poster
+        String imgResource = getIntent().getExtras().getString("imgUrl");
+        //download movie thumbanil and show it
+        new DownloadImageTask((ImageView) findViewById(R.id.movie_detail_img))
+                .execute(imgResource);
+        //getting movie's cover
+        String mCover = getIntent().getExtras().getString("imgUrl");
+        new DownloadImageTask((ImageView) findViewById(R.id.movie_detail_cover))
+                .execute(mCover);
+        //get video url
+        mUrl=getIntent().getExtras().getString("videoUrl");
+        //get production year
+        year=getIntent().getExtras().getString("year");
+        pYear.setText(year);
 
-        //test url for player
-        mUrl="https://wordup-video.s3-eu-west-1.amazonaws.com/Movies/11547733960.mp4"; //test url for player
-        movieThumbnailImg = findViewById(R.id.movie_detail_img); // movie's thumbnail imageView
-        Glide.with(this).load(imgResourceId).into(movieThumbnailImg); // loading movie thumbnail with glid libraay
-        movieThumbnailImg.setImageResource(imgResourceId); // setting image resource for thumbnail imageView
-        movieCoverImg = findViewById(R.id.movie_detail_cover); // movie's cover imageView
-        Glide.with(this).load(mCover).into(movieCoverImg); // loading movie cover with glid library
+
         tv_title = findViewById(R.id.movie_detail_title); // movie's title in detail page textView
         tv_title.setText(movieTitle); // setting the text view value
         getSupportActionBar().setTitle(movieTitle); // setting the action bar text based on movie's name
         tv_description = findViewById(R.id.movie_detail_desc); // description textView
-//        playBtn.setOnClickListener(onPlaybtnClick(mUrl));
+        tv_description.setText(movieDesc);
+
+
         //animation
         movieCoverImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation)); // based on scale_animation in anim folder for movie's cover
         playBtn.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation)); // based on scale_animation in anim folder for play button
@@ -111,5 +129,34 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
+
+
 }
 

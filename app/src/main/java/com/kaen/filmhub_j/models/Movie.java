@@ -1,5 +1,7 @@
 package com.kaen.filmhub_j.models;
 
+import java.net.URL;
+
 //movies class
 public class Movie {
 
@@ -22,6 +24,8 @@ public class Movie {
     private String VideoUrl;
     private String TitleBanerUrl;
     private String RootId;
+
+
 
     public int getId() {
         return id;
@@ -127,6 +131,16 @@ public class Movie {
         RootId = rootId;
     }
 
+    public Movie(String name, String description, String productionYear, String averageRanking, String stars, String videoUrl, String titleBanerUrl) {
+        Name = name;
+        Description = description;
+        ProductionYear = productionYear;
+        AverageRanking = averageRanking;
+        Stars = stars;
+        VideoUrl = videoUrl;
+        TitleBanerUrl = titleBanerUrl;
+    }
+
     public Movie(int id, String name, String description, String subtitleUrl, String productionYear, String netflixRanking, String IMDBRanking, String rottenTomatoesRanking, String metaCritic, String movieDatabaseRanking, String averageRanking, String director, String stars, String duration, int thumbnail, String ageRating, String videoUrl, String titleBanerUrl, String rootId) {
         this.id = id;
         Name = name;
@@ -149,15 +163,10 @@ public class Movie {
         RootId = rootId;
     }
 
-    public Movie(String VideoUrl) {
+    public Movie(String sierra_burgess_is_a_loser, int slide1, String s, String VideoUrl) {
         this.VideoUrl = VideoUrl;
     }
 
-    public Movie(String Name, int thumbnail, String TitleBanerUrl) {
-        this.Name = Name;
-        this.thumbnail = thumbnail;
-        this.TitleBanerUrl = TitleBanerUrl;
-    }
 
     public Movie(String Name, int thumbnail) {
         this.Name = Name;
