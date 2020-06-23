@@ -1,6 +1,10 @@
 package com.kaen.filmhub_j.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kaen.filmhub_j.R;
 import com.kaen.filmhub_j.models.Movie;
+import com.kaen.filmhub_j.ui.MovieDetailActivity;
+import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
@@ -39,7 +46,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.TvTitle.setText(mData.get(position).getName());
-        holder.ImgMovie.setImageResource(mData.get(position).getThumbnail());
+        Log.i("Title:","showwwwwwww");
+        Picasso.get().load(mData.get(position).getTitleBanerUrl()).into(holder.ImgMovie);
+//        holder.ImgMovie.setImageResource(mData.get(position).getThumbnail());
     }
 
     @Override
@@ -66,4 +75,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             });
         }
     }
+
+
 }

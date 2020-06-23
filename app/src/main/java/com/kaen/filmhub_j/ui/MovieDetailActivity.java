@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kaen.filmhub_j.R;
 import com.kaen.filmhub_j.adapters.CastAdapter;
 import com.kaen.filmhub_j.models.Cast;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,11 +33,11 @@ import java.util.List;
 public class MovieDetailActivity extends AppCompatActivity {
 
     private ImageView movieThumbnailImg, movieCoverImg;
-    private TextView tv_title, tv_description,pYear;
+    private TextView tv_title, tv_description,pYear,castText;
     private FloatingActionButton playBtn;
     private RecyclerView castRv;
     private CastAdapter castAdapter;
-    private String mUrl,year;
+    private String mUrl,year,cast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,33 +46,37 @@ public class MovieDetailActivity extends AppCompatActivity {
         // this is for show the movie details objects
         inViews();
         //cast func
-        setupCast();
+//        setupCast();
         onPlaybtnClick();
     }
 
     void inViews() {
         // getting data
-        castRv = findViewById(R.id.castRv); //cast recycler
+//        castRv = findViewById(R.id.castRv); //cast recycler
         playBtn = findViewById(R.id.playBtn); //play button
         pYear=findViewById(R.id.yearTextView);//year textview
+        movieCoverImg=findViewById(R.id.movie_detail_cover);
+        movieThumbnailImg=findViewById(R.id.movie_detail_img);
+        castText=findViewById(R.id.castTextView);
         //getting movie title
         String movieTitle = getIntent().getExtras().getString("title");
         String movieDesc=getIntent().getExtras().getString("description");
         //getting movie's poster
         String imgResource = getIntent().getExtras().getString("imgUrl");
         //download movie thumbanil and show it
-        new DownloadImageTask((ImageView) findViewById(R.id.movie_detail_img))
-                .execute(imgResource);
+        Picasso.get().load(imgResource).into(movieThumbnailImg);
         //getting movie's cover
         String mCover = getIntent().getExtras().getString("imgUrl");
-        new DownloadImageTask((ImageView) findViewById(R.id.movie_detail_cover))
-                .execute(mCover);
+        //download movie cover and show it
+        Picasso.get().load(mCover).into(movieCoverImg);
         //get video url
         mUrl=getIntent().getExtras().getString("videoUrl");
         //get production year
         year=getIntent().getExtras().getString("year");
         pYear.setText(year);
-
+        //get casts
+        cast=getIntent().getExtras().getString("stars");
+        castText.setText(cast);
 
         tv_title = findViewById(R.id.movie_detail_title); // movie's title in detail page textView
         tv_title.setText(movieTitle); // setting the text view value
@@ -88,31 +93,16 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     }
 
-    void setupCast() {
-
-        //cast list
-        List<Cast> mdata = new ArrayList<>(); // create a list of Cast obj and add a ArrayList to it.
-        // setting cast list values for testing
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        mdata.add(new Cast("test1"));
-        // configuration customize adapter for our cast list
-        castAdapter = new CastAdapter(this, mdata);
-        castRv.setAdapter(castAdapter);
-        castRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-    }
+//    void setupCast() {
+//
+//        //cast list
+//        List<Cast> mdata = new ArrayList<>(); // create a list of Cast obj and add a ArrayList to it.
+//        // setting cast list values for testing
+//        // configuration customize adapter for our cast list
+//        castAdapter = new CastAdapter(this, mdata);
+//        castRv.setAdapter(castAdapter);
+//        castRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//    }
 
     void changeActivity(){
         Intent intent=new Intent(this,VideoPlayerActivity.class);
@@ -131,7 +121,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {

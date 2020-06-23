@@ -7,7 +7,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -22,6 +26,7 @@ import com.kaen.filmhub_j.models.Slide;
 import com.kaen.filmhub_j.adapters.SliderPagerAdapter;
 import com.kaen.filmhub_j.utils.DataSource;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -100,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         intent.putExtra("description",movie.getDescription());
         //send year
         intent.putExtra("year",movie.getProductionYear());
+        //send cast
+        intent.putExtra("stars",movie.getStars());
 
         // animation setup
         ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,movieImageView,"animation");
@@ -136,5 +143,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
         }
     }
+
+
 
 }
