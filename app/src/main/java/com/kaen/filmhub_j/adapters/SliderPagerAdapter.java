@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.kaen.filmhub_j.R;
@@ -45,8 +46,6 @@ public class SliderPagerAdapter extends PagerAdapter {
         //add slider to view group
         container.addView(slideLayout);
         return slideLayout;
-
-
     }
 
     @Override
