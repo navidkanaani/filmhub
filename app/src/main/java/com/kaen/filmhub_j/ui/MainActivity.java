@@ -6,15 +6,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.kaen.filmhub_j.adapters.PlayBtnClickListener;
 import com.kaen.filmhub_j.adapters.SeriesAdapter;
 import com.kaen.filmhub_j.adapters.SeriesItemClickListener;
 import com.kaen.filmhub_j.models.Movie;
@@ -26,19 +29,20 @@ import com.kaen.filmhub_j.models.Slide;
 import com.kaen.filmhub_j.adapters.SliderPagerAdapter;
 import com.kaen.filmhub_j.utils.DataSource;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements MovieItemClickListener, SeriesItemClickListener {
+public class MainActivity extends AppCompatActivity implements MovieItemClickListener, SeriesItemClickListener, View.OnClickListener {
 
     private List<Slide> lstSlides;
     private ViewPager sliderpager;
     private TabLayout indicator;
-    private RecyclerView moviesRv,seriesRv;
-
+    private RecyclerView moviesRv, seriesRv;
+    private FloatingActionButton playBtnSlider;
+    private String sTitle, sImg, sUrl;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,78 +54,93 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         inSlider();
         inBestMovies();
         inBestSeries();
-
     }
 
-    private void inBestSeries(){
+
+    private void inBestSeries() {
         //configuring best series adapter
-        SeriesAdapter seriesAdapter=new SeriesAdapter(this,DataSource.getBestSeries(),this);
+        SeriesAdapter seriesAdapter = new SeriesAdapter(this, DataSource.getBestSeries(), this);
         seriesRv.setAdapter(seriesAdapter);
-        seriesRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        seriesRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void inBestMovies() {
         //configuring best movies adapter
-        MovieAdapter movieAdapter=new MovieAdapter(this, DataSource.getBestMovies(),this);
+        MovieAdapter movieAdapter = new MovieAdapter(this, DataSource.getBestMovies(), this);
         moviesRv.setAdapter(movieAdapter);
-        moviesRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        moviesRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void inSlider() {
+        //add data for slider
+        sUrl = "https://wordup-video.s3-eu-west-1.amazonaws.com/Movies/2bc9c1297888548cf914a1ee11b534f83.mp4";
         lstSlides = new ArrayList<>(); // list of slides
         //adding slide item
-        lstSlides.add(new Slide(R.drawable.slide1, "Bad boys - For life"));
-        lstSlides.add(new Slide(R.drawable.slide2, "John wick 3"));
+        lstSlides.add(new Slide("https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/2.jpg", "Sierra Burgess Is a Loser", sUrl));
         //configuring slider adapter
         SliderPagerAdapter adapter = new SliderPagerAdapter(this, lstSlides);
         sliderpager.setAdapter(adapter);
-
         //setup timer for sliding automatically
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
         //setup slider indicator
         indicator.setupWithViewPager(sliderpager, true);
+        Log.e("onPlaye btn: ", "called");
+        //onclick for slider playBtn
+        playBtnSlider.setOnClickListener(this::onClick);
     }
 
     private void inViews() {
         sliderpager = findViewById(R.id.slide_pager); // viewPager for slider
         indicator = findViewById(R.id.indicator); // tabLayout for slider indicator
-        moviesRv=findViewById(R.id.moviesRv); // recyclerView for showing the movies list
-        seriesRv=findViewById(R.id.seriesRv); //recycler for series list
+        moviesRv = findViewById(R.id.moviesRv); // recyclerView for showing the movies list
+        seriesRv = findViewById(R.id.seriesRv); //recycler for series list
+        playBtnSlider = (FloatingActionButton) findViewById(R.id.playBtnSlider);//slider play btn in mainActivity
     }
 
     //onClick for movies
     @Override
     public void onMovieClick(Movie movie, ImageView movieImageView) {
         //when we tap on movies images its send us to MovieDetailActivity
-        Intent intent=new Intent(this,MovieDetailActivity.class);
+        Intent intent = new Intent(this, MovieDetailActivity.class);
         //send title, thumbnail, cover for detail activity
-        intent.putExtra("title",movie.getName());
-        intent.putExtra("imgUrl",movie.getTitleBanerUrl());
-        intent.putExtra("cover",movie.getTitleBanerUrl());
+        intent.putExtra("title", movie.getName());
+        intent.putExtra("imgUrl", movie.getTitleBanerUrl());
+        intent.putExtra("cover", movie.getTitleBanerUrl());
         //sending url to movie detail activity
-        intent.putExtra("videoUrl",movie.getVideoUrl());
+        intent.putExtra("videoUrl", movie.getVideoUrl());
         //send description
-        intent.putExtra("description",movie.getDescription());
+        intent.putExtra("description", movie.getDescription());
         //send year
-        intent.putExtra("year",movie.getProductionYear());
+        intent.putExtra("year", movie.getProductionYear());
         //send cast
-        intent.putExtra("stars",movie.getStars());
+        intent.putExtra("stars", movie.getStars());
 
         // animation setup
-        ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,movieImageView,"animation");
-        startActivity(intent,options.toBundle());
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, movieImageView, "animation");
+        startActivity(intent, options.toBundle());
     }
 
     @Override
     public void onSeriesClick(Series series, ImageView seriesImageView) {
-        Intent intent=new Intent(this,SeriesDetailActivity.class);
-        intent.putExtra("title",series.getTitle());
-        intent.putExtra("imgUrl",series.getThumbnail());
-        intent.putExtra("cover",series.getCover());
+        Intent intent = new Intent(this, SeriesDetailActivity.class);
+        intent.putExtra("title", series.getTitle());
+        intent.putExtra("imgUrl", series.getThumbnail());
+        intent.putExtra("cover", series.getCover());
 
-        ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,seriesImageView,"animation");
-        startActivity(intent,options.toBundle());
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, seriesImageView, "animation");
+        startActivity(intent, options.toBundle());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.playBtnSlider:
+                changeActivity();
+                break;
+            default:
+                Log.e("Hey Hey: ", "there is an error for your slider.");
+        }
     }
 
     //timer class for slider
@@ -144,6 +163,18 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         }
     }
 
-
-
+    void changeActivity() {
+        Intent intent = new Intent(this, VideoPlayerActivity.class);
+        Log.e("Play btn:", "Tapped!!!!");
+        intent.putExtra("videoUrl", sUrl);
+        startActivity(intent);
+    }
+//    void onPlaybtnClick(){
+//        sliderpager.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changeActivity();
+//            }
+//        });
+//    }
 }
