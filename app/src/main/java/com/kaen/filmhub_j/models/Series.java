@@ -4,6 +4,7 @@ public class Series {
     private String title, description,rating,streamLink;
     private int thumbnail,cover,episodes;
 
+
     public Series(String title, int thumbnail) {
         this.title = title;
         this.thumbnail = thumbnail;

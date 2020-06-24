@@ -73,10 +73,12 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
     private void inSlider() {
         //add data for slider
-        sUrl = "https://wordup-video.s3-eu-west-1.amazonaws.com/Movies/2bc9c1297888548cf914a1ee11b534f83.mp4";
         lstSlides = new ArrayList<>(); // list of slides
         //adding slide item
-        lstSlides.add(new Slide("https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/2.jpg", "Sierra Burgess Is a Loser", sUrl));
+        lstSlides.add(new Slide("https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/2.jpg", "Sierra Burgess Is a Loser", "https://wordup-video.s3-eu-west-1.amazonaws.com/Movies/2bc9c1297888548cf914a1ee11b534f83.mp4"));
+        lstSlides.add(new Slide("https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/476.jpg", "22 July", "https://wordup-video.s3-eu-west-1.amazonaws.com/Movies/4768ab9fc8065cd4ea79772933bac6d1b9a.mp4"));
+        lstSlides.add(new Slide("https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/1312.jpg", "Black Water", "https://wordup-video.s3-eu-west-1.amazonaws.com/Movies/13127238b23442984402821a87344f228af6.mp4"));
+        lstSlides.add(new Slide("https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/245.jpg", "Under an Arctic Sky", "https://wordup-video.s3-eu-west-1.amazonaws.com/Movies/2454c26280bf3084d96a0a7febed68b80a5.mp4"));
         //configuring slider adapter
         SliderPagerAdapter adapter = new SliderPagerAdapter(this, lstSlides);
         sliderpager.setAdapter(adapter);
@@ -87,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         indicator.setupWithViewPager(sliderpager, true);
         Log.e("onPlaye btn: ", "called");
         //onclick for slider playBtn
+        int sIndex= sliderpager.getCurrentItem();
+        Slide currentSlide =lstSlides.get(sIndex);
+        sUrl=currentSlide.getUrl();
         playBtnSlider.setOnClickListener(this::onClick);
     }
 
@@ -115,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         intent.putExtra("year", movie.getProductionYear());
         //send cast
         intent.putExtra("stars", movie.getStars());
+        intent.putExtra("rank",movie.getAverageRanking());
 
         // animation setup
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, movieImageView, "animation");
@@ -169,12 +175,5 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         intent.putExtra("videoUrl", sUrl);
         startActivity(intent);
     }
-//    void onPlaybtnClick(){
-//        sliderpager.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                changeActivity();
-//            }
-//        });
-//    }
+
 }

@@ -1,6 +1,7 @@
 package com.kaen.filmhub_j.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.kaen.filmhub_j.R;
 import com.kaen.filmhub_j.models.Slide;
+import com.kaen.filmhub_j.ui.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,6 +26,15 @@ public class SliderPagerAdapter extends PagerAdapter {
     private Context mContext;
     private List<Slide> mList;
     private String imgUrl;
+
+    public SliderPagerAdapter(Context mContext, List<Slide> mList, String imgUrl, String videoUrl) {
+        this.mContext = mContext;
+        this.mList = mList;
+        this.imgUrl = imgUrl;
+        this.videoUrl = videoUrl;
+    }
+
+    public String videoUrl;
 
     public SliderPagerAdapter(Context mContext, List<Slide> mList) {
         this.mContext = mContext;
@@ -43,6 +54,8 @@ public class SliderPagerAdapter extends PagerAdapter {
         Picasso.get().load(imgUrl).into(slideImg);
 //        slideImg.setImageResource(mList.get(position).getImage());
         slideText.setText(mList.get(position).getTitle());
+        //url of slider
+        videoUrl=mList.get(position).getUrl();
         //add slider to view group
         container.addView(slideLayout);
         return slideLayout;

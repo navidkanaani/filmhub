@@ -33,11 +33,11 @@ import java.util.List;
 public class MovieDetailActivity extends AppCompatActivity {
 
     private ImageView movieThumbnailImg, movieCoverImg;
-    private TextView tv_title, tv_description,pYear,castText;
+    private TextView tv_title, tv_description,pYear,castText,rankTextView;
     private FloatingActionButton playBtn;
     private RecyclerView castRv;
     private CastAdapter castAdapter;
-    private String mUrl,year,cast;
+    private String mUrl,year,cast,rank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieCoverImg=findViewById(R.id.movie_detail_cover);
         movieThumbnailImg=findViewById(R.id.movie_detail_img);
         castText=findViewById(R.id.castTextView);
+        rankTextView=findViewById(R.id.movie_rate);
         //getting movie title
         String movieTitle = getIntent().getExtras().getString("title");
         String movieDesc=getIntent().getExtras().getString("description");
@@ -77,6 +78,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         //get casts
         cast=getIntent().getExtras().getString("stars");
         castText.setText(cast);
+
+        rank=getIntent().getExtras().getString("rank");
+        rankTextView.setText(rank);
 
         tv_title = findViewById(R.id.movie_detail_title); // movie's title in detail page textView
         tv_title.setText(movieTitle); // setting the text view value
