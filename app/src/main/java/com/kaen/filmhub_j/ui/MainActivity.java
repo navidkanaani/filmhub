@@ -12,8 +12,10 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.kaen.filmhub_j.adapters.SeriesAdapter;
 import com.kaen.filmhub_j.adapters.SeriesItemClickListener;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     private ViewPager sliderpager;
     private TabLayout indicator;
     private RecyclerView moviesRv,seriesRv;
+    private FloatingActionButton playBtn;
+    private String sTitle,sImg,sUrl;
 
 
     @Override
@@ -50,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         inSlider();
         inBestMovies();
         inBestSeries();
-
     }
 
     private void inBestSeries(){
@@ -68,19 +71,22 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     }
 
     private void inSlider() {
+        //add data for slider
+        sImg="https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/2.jpg";
+        sTitle="Sierra Burgess Is a Loser";
+        sUrl="https://wordup-video.s3-eu-west-1.amazonaws.com/Movies/2bc9c1297888548cf914a1ee11b534f83.mp4";
         lstSlides = new ArrayList<>(); // list of slides
         //adding slide item
-        lstSlides.add(new Slide(R.drawable.slide1, "Bad boys - For life"));
-        lstSlides.add(new Slide(R.drawable.slide2, "John wick 3"));
+        lstSlides.add(new Slide(sImg,sTitle,sUrl));
         //configuring slider adapter
         SliderPagerAdapter adapter = new SliderPagerAdapter(this, lstSlides);
         sliderpager.setAdapter(adapter);
-
         //setup timer for sliding automatically
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
         //setup slider indicator
         indicator.setupWithViewPager(sliderpager, true);
+        Log.e("onPlaye btn: ","called");
     }
 
     private void inViews() {
@@ -144,6 +150,21 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         }
     }
 
+    void changeActivity(){
+        Intent intent=new Intent(this,VideoPlayerActivity.class);
+        Log.e("Play btn:","Tapped!!!!");
+        intent.putExtra("videoUrl",sUrl);
+        startActivity(intent);
+    }
+
+//    void onPlaybtnClick(){
+//        playBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changeActivity();
+//            }
+//        });
+//    }
 
 
 }
