@@ -15,12 +15,10 @@ import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.kaen.filmhub_j.adapters.SeriesItemClickListener;
 import com.kaen.filmhub_j.models.Movie;
 import com.kaen.filmhub_j.adapters.MovieAdapter;
 import com.kaen.filmhub_j.adapters.MovieItemClickListener;
 import com.kaen.filmhub_j.R;
-import com.kaen.filmhub_j.models.Series;
 import com.kaen.filmhub_j.models.Slide;
 import com.kaen.filmhub_j.adapters.SliderPagerAdapter;
 import com.kaen.filmhub_j.utils.DataSource;
@@ -30,7 +28,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements MovieItemClickListener, SeriesItemClickListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements MovieItemClickListener, View.OnClickListener {
 
     private List<Slide> lstSlides;
     private ViewPager sliderpager;
@@ -124,14 +122,24 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         startActivity(intent, options.toBundle());
     }
 
-    @Override
-    public void onSeriesClick(Series series, ImageView seriesImageView) {
+    public void onSeriesClick(Movie movie, ImageView movieImageView) {
         Intent intent = new Intent(this, MovieDetailActivity.class);
-        intent.putExtra("title", series.getTitle());
-        intent.putExtra("imgUrl", series.getThumbnail());
-        intent.putExtra("cover", series.getCover());
+        //send title, thumbnail, cover for detail activity
+        intent.putExtra("title", movie.getName());
+        intent.putExtra("imgUrl", movie.getTitleBanerUrl());
+        intent.putExtra("cover", movie.getTitleBanerUrl());
+        //sending url to movie detail activity
+        intent.putExtra("videoUrl", movie.getVideoUrl());
+        //send description
+        intent.putExtra("description", movie.getDescription());
+        //send year
+        intent.putExtra("year", movie.getProductionYear());
+        //send cast
+        intent.putExtra("stars", movie.getStars());
+        intent.putExtra("rank",movie.getAverageRanking());
 
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, seriesImageView, "animation");
+        // animation setup
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, movieImageView, "animation");
         startActivity(intent, options.toBundle());
     }
 

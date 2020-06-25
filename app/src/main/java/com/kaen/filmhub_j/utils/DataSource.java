@@ -1,16 +1,7 @@
 package com.kaen.filmhub_j.utils;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ImageView;
-
-import com.kaen.filmhub_j.R;
 import com.kaen.filmhub_j.models.Movie;
-import com.kaen.filmhub_j.models.Series;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
