@@ -144,6 +144,19 @@ public class DataSource {
                                 "https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/751.jpg"
                         )
                 );
+
+
+
+
+
+
+        return lstMovies;
+    }
+    //adding series data
+    public static List<Movie> getBestSeries(){
+        //creating a list of movies and add an arrayList of names and covers to it.
+        List<Movie> lstMovies=new ArrayList<>();
+        //adding title, movies image
         lstMovies.add
                 (
                         new Movie(
@@ -324,25 +337,7 @@ public class DataSource {
                                 "https://wordup-video.s3-eu-west-1.amazonaws.com/MovieBanners/2090.jpg"
                         )
                 );
-
-
-
-
-
         return lstMovies;
-    }
-    //adding series data
-    public static List<Series> getBestSeries(){
-        //creating a list of movies and add an arrayList of names and covers to it.
-        List<Series> lstSeries=new ArrayList<>();
-        //adding title, movies image
-        lstSeries.add(new Series("bad boys", R.drawable.slide1,R.drawable.johnwichcover));
-        lstSeries.add(new Series("john wick", R.drawable.slide2));
-        lstSeries.add(new Series("bad boys", R.drawable.slide1,R.drawable.johnwichcover));
-        lstSeries.add(new Series("john wick", R.drawable.slide2));
-        lstSeries.add(new Series("bad boys", R.drawable.slide1,R.drawable.johnwichcover));
-        lstSeries.add(new Series("john wick", R.drawable.slide2));
-        return lstSeries;
     }
 
 }

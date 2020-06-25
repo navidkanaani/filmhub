@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:padding="8dp"
-        android:text="Best Series Of This Week"
+        android:text="Top choices"
         android:textColor="#5D6D7E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

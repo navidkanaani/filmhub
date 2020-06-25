@@ -10,7 +10,6 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.SeriesDetailActivity"></activity>
         <activity android:name=".ui.MovieDetailActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>

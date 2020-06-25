@@ -9,16 +9,12 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.kaen.filmhub_j.adapters.PlayBtnClickListener;
-import com.kaen.filmhub_j.adapters.SeriesAdapter;
 import com.kaen.filmhub_j.adapters.SeriesItemClickListener;
 import com.kaen.filmhub_j.models.Movie;
 import com.kaen.filmhub_j.adapters.MovieAdapter;
@@ -58,9 +54,10 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
 
     private void inBestSeries() {
-        //configuring best series adapter
-        SeriesAdapter seriesAdapter = new SeriesAdapter(this, DataSource.getBestSeries(), this);
-        seriesRv.setAdapter(seriesAdapter);
+
+        //configuring best movies adapter
+        MovieAdapter movieAdapter = new MovieAdapter(this, DataSource.getBestSeries(), this);
+        seriesRv.setAdapter(movieAdapter);
         seriesRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
     @Override
     public void onSeriesClick(Series series, ImageView seriesImageView) {
-        Intent intent = new Intent(this, SeriesDetailActivity.class);
+        Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra("title", series.getTitle());
         intent.putExtra("imgUrl", series.getThumbnail());
         intent.putExtra("cover", series.getCover());
