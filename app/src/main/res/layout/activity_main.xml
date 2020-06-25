@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="2dp">
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slide_pager"
         android:layout_width="match_parent"
@@ -20,6 +21,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/playBtnSlider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/slide_pager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/slide_pager"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_play_arrow_black_24dp" />
 
 
     <com.google.android.material.tabs.TabLayout
@@ -67,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:padding="8dp"
-        android:text="Best Series Of This Week"
+        android:text="Top choices"
         android:textColor="#5D6D7E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -47,7 +47,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
         public CastViewHolder(@NonNull View itemView) {
             super(itemView);
-            cast=itemView.findViewById(R.id.castRv);
+//            cast=itemView.findViewById(R.id.castRv);
         }
     }
 }

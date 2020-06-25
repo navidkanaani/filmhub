@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/johnwichcover" />
+            tools:srcCompat="@drawable/ic_launcher_foreground" />
 
         <ImageView
             android:id="@+id/gradientForCover"
@@ -56,7 +56,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/movie_detail_cover"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_detail_cover"
-            app:srcCompat="@drawable/slide2" />
+            app:srcCompat="@drawable/ic_launcher_foreground" />
 
         <TextView
             android:id="@+id/movie_detail_title"
@@ -121,21 +121,62 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_detail_desc" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/castRv"
-            android:layout_width="409dp"
-            android:layout_height="364dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
+        <TextView
+            android:id="@+id/castTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/descColor"
+            android:padding="16dp"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/castText" />
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/castRv"-->
+<!--            android:layout_width="409dp"-->
+<!--            android:layout_height="364dp"-->
+<!--            android:layout_marginStart="1dp"-->
+<!--            android:layout_marginTop="2dp"-->
+<!--            android:layout_marginEnd="1dp"-->
+<!--            android:layout_marginBottom="1dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/castText" />-->
+
+        <ImageView
+            android:id="@+id/dateIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_rate"
+            app:layout_constraintStart_toEndOf="@+id/movie_rate"
+            app:layout_constraintTop_toTopOf="@+id/movie_rate"
+            app:srcCompat="@drawable/ic_baseline_date_range_24" />
+
+        <TextView
+            android:id="@+id/yearTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Year"
+            android:textColor="@color/descColor"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_rate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/dateIcon"
+            app:layout_constraintTop_toTopOf="@+id/movie_rate" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

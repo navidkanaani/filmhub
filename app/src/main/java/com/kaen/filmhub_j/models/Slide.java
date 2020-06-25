@@ -1,20 +1,35 @@
 package com.kaen.filmhub_j.models;
 //slides class
 public class Slide {
-    private int image;
+    private String image;
     private String title;
+    private String url;
 
-    public Slide(int image, String title) {
+    public Slide(String image, String title, String url) {
+        this.image = image;
+        this.title = title;
+        this.url = url;
+    }
+
+    public Slide(String image, String title) {
         this.image = image;
         this.title = title;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getTitle() {

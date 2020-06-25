@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kaen.filmhub_j">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -9,7 +10,6 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.SeriesDetailActivity"></activity>
         <activity android:name=".ui.MovieDetailActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
